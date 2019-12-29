@@ -1,0 +1,36 @@
+import pandas as pd
+import datetime
+print(datetime.datetime.now())
+
+cols_keep = ['REPORTER_DEA_NO',
+    'REPORTER_NAME',
+    'BUYER_DEA_NO',
+    'BUYER_NAME',
+    'QUANTITY']
+
+cols_top_buy = [
+    'BUYER_DEA_NO',
+    'BUYER_NAME',
+    'QUANTITY']
+
+cols_top_dist = ['REPORTER_DEA_NO',
+    'REPORTER_NAME',
+    'QUANTITY']
+    
+dt1 = {'BUYER_DEA_NO': 'str', 'BUYER_NAME': 'str', 'QUANTITY': 'float64'}
+dt2 = {'REPORTER_DEA_NO': 'str', 'REPORTER_NAME': 'str', 'QUANTITY': 'float64'}
+
+df1 = pd.read_csv('RepBuyNamesIndexed.csv', usecols=cols_top_buy)
+print(df1.head())
+df2 = pd.read_csv('RepBuyNamesIndexed.csv', usecols=cols_top_dist)
+print(df2.head())
+
+df_buy = df1.groupby(['BUYER_DEA_NO', 'BUYER_NAME']).sum()
+df_dist = df2.groupby(['REPORTER_DEA_NO', 'REPORTER_NAME']).sum()
+
+print(datetime.datetime.now())
+
+df_buy.to_csv('Buy_Dea_Name_Qty_Grouped.csv')
+df_buy.to_csv('Rep_Dea_Name_Qty_Grouped.csv')
+
+# Analyzed these data sets in excel and made charts in excel. Excel File available upon request. 
